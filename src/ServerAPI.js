@@ -1,14 +1,15 @@
 const SERVER_URL = "http://localhost:4040";
 
-/**
- *
- * @param {Object} data
- * @return {Promise<Response>}
- */
-const post = (data, url) => {
+const METHODS = {
+	GET: "GET",
+	POST: "POST",
+	PUT: "PUT"
+};
+
+const request = (method, data, url) => {
 	return new Promise((resolve, reject) => {
 		fetch(SERVER_URL + url, {
-			method: 'POST',
+			method: method,
 			headers: {
 				'Content-Type': 'application/json'
 			},
@@ -22,10 +23,27 @@ const post = (data, url) => {
 			}
 		});
 	});
+};
 
+/**
+ *
+ * @param {Object} data
+ * @param {string} url
+ * @return {Promise<Response>}
+ */
+const post = (data, url) => {
+	return request(METHODS.POST, data, url);
 };
 
 
 export const login = (name) => {
 	return post({name}, "/login");
+};
+
+
+/**
+ * @param {string} id
+ */
+export const getLab = (id) => {
+	return post({id}, "/labyrinth")
 };

@@ -3,5 +3,7 @@ export default {
 		token: null,
 		loggedIn: false,
 		name: null
-	}
+	},
+	labConfig: null,
+	stage: null
 };

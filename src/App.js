@@ -5,7 +5,6 @@ import MainPage from "./components/MainPage";
 import {connect} from "react-redux";
 
 const mapStateToProps = ({loginData}) => {
-	console.log("MAP STAT", loginData);
 	const {loggedIn} = loginData;
 
 	return {loggedIn};
@@ -18,7 +17,6 @@ class App extends React.Component {
 	}
 
 	render() {
-		console.error("APP PROPS", this.props);
 		return this.props.loggedIn ? <MainPage/> : <Login/>;
 	}
 }

@@ -1,4 +1,3 @@
-// TODO this one should be able to highlight code syntax and put value into state of parent component.
 import React from 'react';
 import {Button, Paper} from "@material-ui/core";
 import CodeMirror from "react-codemirror";
