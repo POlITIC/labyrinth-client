@@ -6,7 +6,7 @@ import CodeInput from "./CodeInput";
 import LabyrinthField from "./LabyrinthField";
 import {stages} from "../store/enums";
 import store from "../store/store";
-import setStage from "../store/actionCreators/setStage";
+import {setStage} from "../store/actionCreators/ActionCreator";
 
 const mapStateToProps = ({loginData, stage}) => {
 	return {
@@ -43,7 +43,7 @@ class MainPage extends React.Component {
 						Hello {this.props.userName}!
 
 						<Button variant="contained" color="primary" label="Name"
-								onClick={this.setStage.bind(this, stages.CODE)}>Create Bot</Button>
+								onClick={this.setStage.bind(this, stages.CODE)}>Bot design</Button>
 						<Button variant="contained" color="primary" label="Name"
 								onClick={this.setStage.bind(this, stages.LABYRINTH)}>Death match</Button>
 

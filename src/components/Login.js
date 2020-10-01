@@ -2,7 +2,7 @@ import React from 'react';
 import {TextField, Button} from "@material-ui/core";
 import {login} from "../ServerAPI";
 import store from "../store/store";
-import loginAction from "../store/actionCreators/loginAction";
+import {loginAction} from "../store/actionCreators/ActionCreator";
 
 class Login extends React.Component {
 

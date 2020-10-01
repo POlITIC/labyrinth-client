@@ -6,6 +6,18 @@ import "codemirror/lib/codemirror.css"
 import 'codemirror/addon/display/autorefresh';
 import 'codemirror/addon/comment/comment';
 import 'codemirror/addon/edit/matchbrackets';
+import {submitCode} from "../ServerAPI";
+import {connect} from "react-redux";
+import {updateCode} from "../store/actionCreators/ActionCreator";
+import store from "../store/store";
+
+
+const mapStateToProps = ({loginData, code}) => {
+	return {
+		userName: loginData.name,
+		code
+	};
+};
 
 const fileInputID = "fileInput";
 
@@ -15,22 +27,32 @@ class CodeInput extends React.Component {
 		super(props);
 
 		this.state = {
-			code: "return ['left', 'up', 'right', 'down'][Math.floor(Math.random() * 4)];"
+			submitDisabled: false
 		};
 
 		this.updateCode = this.updateCode.bind(this);
+
 
 		this.mirrorRef = React.createRef();
 	}
 
 	updateCode(newCode) {
-		this.setState({
-			code: newCode
-		});
+		store.dispatch(updateCode(newCode));
+	}
+
+	setSubmitDisabled(disabled) {
+		this.setState(Object.assign({}, this.state, {
+			submitDisabled: disabled
+		}));
 	}
 
 	submit() {
-		this.updateCode("SDFAWDASDWQDASDAW");
+		this.setSubmitDisabled(true);
+
+		submitCode(this.props.userName, this.props.code)
+			.finally(() => {
+				this.setSubmitDisabled(false);
+			});
 	}
 
 	readTextFile(file) {
@@ -41,7 +63,7 @@ class CodeInput extends React.Component {
 
 			mirrInstance.doc.setValue(reader.result);
 
-			this.updateCode();
+			this.updateCode(reader.result);
 		};
 		reader.readAsText(file);
 	};
@@ -52,6 +74,7 @@ class CodeInput extends React.Component {
 		fileSelector.onchange = (e) => {
 			const file = fileSelector.files[0];
 
+
 			if (file) {
 				this.readTextFile(file);
 			}
@@ -61,14 +84,15 @@ class CodeInput extends React.Component {
 
 	componentDidMount() {
 		this.initFileSelector();
+		this.updateCode(this.props.code)
 	}
 
 	render() {
 		return (
 			<div>
 				<CodeMirror
-					value={this.state.code}
-					onChange={this.updateCode}
+					value={this.props.code}
+					onChange={this.updateCode.bind(this)}
 					ref={this.mirrorRef}
 					preserveScrollPosition={true}
 					options={
@@ -97,6 +121,7 @@ class CodeInput extends React.Component {
 					variant="contained"
 					color="primary"
 					label="Submit"
+					disabled={this.state.submitDisabled}
 					onClick={this.submit.bind(this)}
 				>
 					Submit
@@ -109,4 +134,4 @@ class CodeInput extends React.Component {
 }
 
 
-export default CodeInput;
+export default connect(mapStateToProps)(CodeInput);

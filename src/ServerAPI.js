@@ -47,3 +47,8 @@ export const login = (name) => {
 export const getLab = (id) => {
 	return post({id}, "/labyrinth")
 };
+
+
+export const submitCode = (botName, codeString) => {
+	return post({botName, codeString}, "/saveBotCode");
+};

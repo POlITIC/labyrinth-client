@@ -5,5 +5,6 @@ export default {
 		name: null
 	},
 	labConfig: null,
-	stage: null
+	stage: null,
+	code: "return ['left', 'up', 'right', 'down'][Math.floor(Math.random() * 4)];"
 };

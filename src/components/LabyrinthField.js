@@ -5,7 +5,7 @@ import store from "../store/store";
 import React from 'react';
 import {Button} from "@material-ui/core";
 import {getLab} from "../ServerAPI";
-import showLabAction from "../store/actionCreators/showLabAction";
+import {showLabAction} from "../store/actionCreators/ActionCreator";
 
 const APP_CONTAINER_ID = "pixiAppContainer";
 
